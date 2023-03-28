@@ -7,6 +7,7 @@ const AuthContext = createContext();
 const AuthProvider = ({children}) => {
 
     const [auth, setAuth] = useState({});
+    const [cargando, setCargando] = useState(true);
     const [alerta, setAlerta] = useState({});
 
     const navigate= useNavigate();
@@ -15,6 +16,7 @@ const AuthProvider = ({children}) => {
         const autenticarUsuario = async () =>{
             const token = localStorage.getItem("token");
             if (!token) {
+                setCargando(false);
                 return;
             }
             const config = {
@@ -24,16 +26,30 @@ const AuthProvider = ({children}) => {
                 }
             }
             try {
-                const {data}= await clienteAxios("", config);
+                const {data}= await clienteAxios("usuarios/perfil", config);
                 setAuth(data);
-                if (data.idUsuario && location.pathname === "/") {
-                    navigate("/admin");
+                if (data.numeroControl && location.pathname ==="/") {
+                    if (data.tipoUsuario =="Estudiante") {
+                        navigate("/estudiantes");
+                    }
+                }
+                if (data.idPersonal && location.pathname ==="/") {
+                    if (data.tipoUsuario =="Personal") {
+                        navigate("/personal");
+                    }
+                }
+                if (data.idUsuario && location.pathname ==="/") {
+                    if (data.tipoUsuario=="Administrador") {
+                        navigate("/admin");
+                    }else if(data.tipoUsuario=="Usuario"){
+                        navigate("/user");
+                    }
                 }
             } catch (error) {
                 setAuth({});
             }
             finally{
-                
+                setCargando(false)
             }
         }
 
@@ -46,9 +62,12 @@ const AuthProvider = ({children}) => {
                 auth,
                 setAuth,
                 alerta, 
-                setAlerta
+                setAlerta, 
+                cargando
             }}
-        >{children}</AuthContext.Provider>
+        >
+            {children}
+        </AuthContext.Provider>
     );
 }
 

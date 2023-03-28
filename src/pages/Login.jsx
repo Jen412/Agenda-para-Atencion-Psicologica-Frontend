@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import clienteAxios from "../config/clienteAxios";
 import useAuth from "../hooks/useAuth";
 import Alerta from "../components/Alerta";
@@ -26,8 +26,16 @@ const Login = () => {
             const {data} = await clienteAxios.post("/usuarios/login", {email, password});
             localStorage.setItem("token", data.token);
             setAlerta({});
-            setAuth(data);
-            navigate("/admin");
+            setAuth(data); 
+            if (data.tipoUsuario ==="Administrador") {
+                navigate("/admin");
+            }else if (data.tipoUsuario==="Usuario") {
+                navigate("/user");
+            }else if (data.tipoUsuario ==="Estudiante") {
+                navigate("/estudiantes")
+            }else if (data.tipoUsuario ==="Personal") {
+                navigate("/personal")
+            }
         } catch (error) {
             console.log(error)
             setAlerta({
@@ -44,7 +52,7 @@ const Login = () => {
 
             {msg && <Alerta alerta={alerta}/>}
 
-            <form onSubmit={handleSubmit} className="my-10 bg-slate-400 shadow rounded-lg p-10">
+            <form onSubmit={handleSubmit} className="my-10 bg-slate-500 shadow rounded-lg p-10">
                 <div className="my-5">
                     <label htmlFor="email" className="text-gray-800 uppercase block text-xl font-bold">Email</label>
                     <input 
@@ -73,6 +81,17 @@ const Login = () => {
                     className="bg-indigo-500 w-full mb-3 py-3 mt-3 text-white uppercase font-bold rounded hover:cursor-pointer hover:bg-indigo-900 transition-colors"
                 />
             </form>
+            <nav className="lg:flex lg:justify-between">
+                <Link
+                    className="block text-center my-5 text-slate-500 uppercase text-sm hover:text-blue-600"
+                    to="registrar"
+                >¿No Tienes una Cuenta? Registrate como Paciente </Link>
+
+                <Link
+                    className="block text-center my-5 text-slate-500 uppercase text-sm  hover:text-blue-600"
+                    to="olvide-password"
+                >Olvide Mi Password</Link>
+            </nav>
         </>
     )
 }

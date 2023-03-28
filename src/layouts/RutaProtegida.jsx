@@ -1,4 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom"
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import useAuth from "../hooks/useAuth"
 
 
@@ -7,11 +9,13 @@ const RutaProtegida = () => {
 
     return (
         <>
-            {auth.idUsuario ? (
-                <div className="bg-100">
+            {auth.idUsuario  || auth.numeroControl || auth.idPersonal? (
+                <div>
+                    <Header/>
                     <main className="p-10 flex-1">
                         <Outlet/>
                     </main>
+                    <Footer/>
                 </div>
             ) : <Navigate to="/"/> }
         </>
