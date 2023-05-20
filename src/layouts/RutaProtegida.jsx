@@ -12,7 +12,7 @@ const RutaProtegida = () => {
             {auth.idUsuario  || auth.numeroControl || auth.idPersonal? (
                 <div>
                     <Header/>
-                    <main className="p-10 flex-1">
+                    <main className="p-10 flex flex-1 justify-center">
                         <Outlet/>
                     </main>
                     <Footer/>

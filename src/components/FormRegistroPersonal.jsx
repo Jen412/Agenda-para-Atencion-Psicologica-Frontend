@@ -12,12 +12,25 @@ const FormRegistroPersonal = () => {
     const [sexo, setSexo] = useState("");
     const { registrarPersonal, alerta, mostrarAlerta} = usePersonal();
     
+    const validateEmail = email =>{
+        let emailRegez = /^[a-zA-Z0-9._%+-]+@cdguzman\.tecnm\.mx$/;
+        return emailRegez.test(email);
+    }
+
+
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try {
             if ([email, password, telefono].includes("")) {
                 mostrarAlerta({
                     mensaje: "Campos Obligatorios Vacios",
+                    error: true
+                });
+                return;
+            }
+            if (!validateEmail(email)) {
+                mostrarAlerta({
+                    mensaje: "Email con formato invalido utilice su correo institucional",
                     error: true
                 });
                 return;

@@ -32,9 +32,15 @@ const Login = () => {
             }else if (data.tipoUsuario==="Usuario") {
                 navigate("/user");
             }else if (data.tipoUsuario ==="Estudiante") {
-                navigate("/estudiantes")
+                window.location.href = window.location.href;
+                setTimeout(() => {
+                    navigate("/estudiantes")
+                }, 100);
             }else if (data.tipoUsuario ==="Personal") {
-                navigate("/personal")
+                window.location.href = window.location.href;
+                setTimeout(() => {
+                    navigate("/personal")
+                }, 100);
             }
         } catch (error) {
             console.log(error)
