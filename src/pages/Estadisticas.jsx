@@ -51,7 +51,12 @@ const Estadisticas = () => {
         setSexoG(sexo);
         setTiempoPeriodo(periodoTiempo);
         setTipoGrafica("Sexo");
-        navigate("/users/estadisticasGraficas");
+        if (auth.tipoUsuario === "Administrador") {
+            navigate("/admin/estadisticasGraficas");
+        }
+        else if (auth.tipoUsuario === "Usuario") {
+            navigate("/user/estadisticasGraficas");
+        }
     }
 
     const {msg} = alerta;
@@ -96,8 +101,8 @@ const Estadisticas = () => {
                                 >
                                     <option value="" disabled>--Seleccione Periodo de Tiempo--</option>
                                     <option value="mes">Mes</option>
-                                    <option value="6meses">6 Meses</option>
-                                    <option value="anios">Años</option>
+                                    <option value="semestre">6 Meses</option>
+                                    <option value="anual">Años</option>
                                 </select>
                             </div>
                             <input 
@@ -142,8 +147,8 @@ const Estadisticas = () => {
                                 >
                                     <option value="" disabled>--Seleccione Periodo de Tiempo--</option>
                                     <option value="mes">Mes</option>
-                                    <option value="6meses">6 Meses</option>
-                                    <option value="anios">Años</option>
+                                    <option value="semestre">6 Meses</option>
+                                    <option value="anual">Años</option>
                                 </select>
                             </div>
                             <input 

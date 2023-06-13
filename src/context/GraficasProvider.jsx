@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import clienteAxios from "../config/clienteAxios";
-import { useNavigate } from "react-router-dom";
 
 const GraficasContext = createContext();
 
@@ -10,9 +9,56 @@ const GraficasProvider = ({children})=>{
     const [tiempoPeriodo, setTiempoPeriodo] = useState("");
     const [alerta, setAlerta] = useState({});
     const [sexoG, setSexoG] = useState("");
+    const [citas, setCitas] = useState([]);
+    const [labels, setLabels] = useState([]);
+    const [cargando, setCargando] = useState(false);
 
-    const calcularCitas = ()=>{
+    const obtenerCitasCarrera= async()=>{
+        setCargando(true);
+        const token = localStorage.getItem("token");
+        if (!token) {
+            return;
+        }
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+        try {
+            const {data} = await clienteAxios.post(`/citas/estaditicas/${carreraG}`, {periodoTiempo: tiempoPeriodo}, config);
+            setCitas(data.citas);
+            setLabels(data.labels);
+        } catch (error) {
+            console.log("🚀 ~ file: GraficasProvider.jsx:31 ~ obtenerCitasCarrera ~ error:", error)
+        }
+        finally{
+            setCargando(false);
+        }
+    }
 
+    const obtenerCitasSexo =async()=>{
+        setCargando(true);
+        const token = localStorage.getItem("token");
+        if (!token) {
+            return;
+        }
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            }
+        }
+        try {
+            const {data} = await clienteAxios.post(`/citas/estaditicas/sexo/${sexoG}`, {periodoTiempo: tiempoPeriodo}, config);
+            setCitas(data.citas);
+            setLabels(data.labels);
+        } catch (error) {
+            console.log("🚀 ~ file: GraficasProvider.jsx:31 ~ obtenerCitasCarrera ~ error:", error)
+        }
+        finally{
+            setCargando(false);
+        }
     }
 
     return (
@@ -26,9 +72,13 @@ const GraficasProvider = ({children})=>{
                 setTiempoPeriodo,
                 alerta,
                 setAlerta,
-                calcularCitas,
+                obtenerCitasCarrera,
+                obtenerCitasSexo,
                 setSexoG, 
-                sexoG
+                sexoG,
+                citas,
+                labels,
+                cargando
             }}
 
         >{children}</GraficasContext.Provider>
