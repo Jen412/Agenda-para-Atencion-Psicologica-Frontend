@@ -9,10 +9,13 @@ const AgendarCita = () => {
     const [motivo, setMotivo] = useState("Orientación Psicologica");
     const [fecha, setFecha] = useState("");
     const [hora, setHora] = useState("");
-
+    
     const {auth} = useAuth();
     const {agregarCita, alerta, mostrarAlerta} = useCitas();
     const {comprobarDia} = useDias();
+
+    let horasMatutino = ["8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00"];
+    let horasVespertino = ["15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
 
     const handleSubmit = async e=>{
         e.preventDefault();
@@ -29,7 +32,6 @@ const AgendarCita = () => {
                 error: true
             });
         }
-                
     }
     const {msg} = alerta
 
@@ -50,16 +52,9 @@ const AgendarCita = () => {
             });
         }
 
+
     }, [fecha]);
 
-    useEffect(() => {
-        const horaState = new Date();
-        //console.log("🚀 ~ file: AgendarCita.jsx:44 ~ useEffect ~ horaState:", horaState)
-        
-        if(hora >"20:00"){
-
-        }
-    }, [hora]);
 
     return (
         <div className="container w-full">
@@ -80,6 +75,23 @@ const AgendarCita = () => {
                     </div>
                     <div className="my-5">
                         <label htmlFor="hora" className="text-gray-800 uppercase block text-xl font-bold">Hora de cita</label>
+                        <select 
+                            id="hora"
+                            className="w-full mt-3 p-3 boder rounded-xl bg-gray-50 placeholder:text-slate-700"
+                            value={hora}
+                            onChange={e=>setHora(e.target.value)}
+                        >
+                            <option value="" disabled>--Seleccione Hora--</option>
+                            {auth.turno ==="Matutino" && horasMatutino.map((hora, index) =>(
+                                <option key={index} value={hora}>{hora}</option>
+                            ))}
+                            {auth.turno ==="Vespertino" && horasVespertino.map((hora, index)=>(
+                                <option key={index} value={hora}>{hora}</option>
+                            ))}
+                        </select>
+                    </div>
+                    {/* <div className="my-5">
+                        <label htmlFor="hora" className="text-gray-800 uppercase block text-xl font-bold">Hora de cita</label>
                         <input 
                             type="time" 
                             id="hora"
@@ -87,7 +99,7 @@ const AgendarCita = () => {
                             value={hora}
                             onChange={e=>setHora(e.target.value)}
                         />
-                    </div>
+                    </div> */}
                     <div className="my-5">
                         <label htmlFor="motivo" className="text-gray-800 uppercase block text-xl font-bold">Motivo de Cita</label>
                         <select

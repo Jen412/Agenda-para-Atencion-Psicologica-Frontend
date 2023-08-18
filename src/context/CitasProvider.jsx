@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import dayjs from "dayjs"
 import clienteAxios from '../config/clienteAxios';
 
 const CitasContext = createContext()
@@ -33,7 +34,36 @@ const CitasProvider = ({children}) =>{
                 console.log("🚀 ~ file: CitasProvider.jsx:27 ~ obtenerCitas ~ error", error)
             }
         }
-        return () => {obtenerCitas()};
+        const comprobarCitas = async () =>{
+            try {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                    return;
+                }
+                const config = {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+                const {data} = await clienteAxios("/citas", config);
+                data.forEach(cita =>{
+                    let dateCita = dayjs(cita.fechaCita);
+                    let dateNow = dayjs(Date.now());
+                    if (cita.fechaCancelacion==null && cita.procesada ===false) {
+                        if (dateCita < dateNow) {
+                            clienteAxios.post(`/citas/cancelar/${cita.idCita}`, config);
+                        }
+                    }
+                });
+            } catch (error) {
+                console.log("🚀 ~ file: CitasProvider.jsx:60 ~ comprobarCitas ~ error:", error)
+            }
+        }
+        return () => {
+            obtenerCitas();
+            comprobarCitas();
+        };
     }, []);
 
 

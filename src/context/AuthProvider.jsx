@@ -115,6 +115,7 @@ const AuthProvider = ({children}) => {
     }, []);
 
     const obtenerUsuario = async (idUsuario) => {
+        setCargando(true);
         const token = localStorage.getItem("token");
         if (!token) {
             setCargando(false);
@@ -131,6 +132,9 @@ const AuthProvider = ({children}) => {
             setUsuario(data);
         } catch (error) {
             console.log("🚀 ~ file: AuthProvider.jsx:126 ~ obtenerUsuario ~ error:", error)
+        }
+        finally{
+            setCargando(false);
         }
     }
 
@@ -178,6 +182,7 @@ const AuthProvider = ({children}) => {
                 cargando,
                 usuarioM,
                 usuarioV,
+                usuario,
                 obtenerUsuario,
                 agregarHorario,
                 horarioUsuarioM,
