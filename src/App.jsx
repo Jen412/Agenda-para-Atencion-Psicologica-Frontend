@@ -1,4 +1,4 @@
-import {Route, Routes, BrowserRouter} from "react-router-dom"
+import {Route, Routes, BrowserRouter } from "react-router-dom"
 //Layouts
 import AuthLayout from "./layouts/AuthLayout"
 import RutaProtegida from "./layouts/RutaProtegida";
@@ -33,6 +33,8 @@ import AgendarCitaAdmin from "./pages/AgendarCitaAdmin";
 import RegistrarHorario from "./pages/RegistrarHorario";
 import HorarioUsuarios from "./pages/HorarioUsuarios";
 import EstadisticasGraficas from "./pages/EstadisticasGraficas";
+import OlvidePassword from "./pages/OlvidePassword";
+import NuevoPassword from "./pages/NuevoPassword";
 
 function App() {
     return (
@@ -44,10 +46,12 @@ function App() {
                             <DiasProvider>
                                 <CitasProvider>
                                     <GraficasProvider>
-                                        <Routes>
+                                        <Routes> 
                                             <Route path="/" element={<AuthLayout/>}>
                                                 <Route index  element={<Login/>}/>
                                                 <Route path="registrar" element={<RegistrarPaciente/>}/>
+                                                <Route path="olvide-password" element={<OlvidePassword/>}/>
+                                                <Route path="olvide-password/:token" element={<NuevoPassword/>}/>
                                             </Route>
                                             <Route path="/admin" element={<RutaProtegida/>}>
                                                 <Route index element={<Admin/>}/>

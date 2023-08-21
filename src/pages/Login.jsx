@@ -89,12 +89,12 @@ const Login = () => {
             </form>
             <nav className="lg:flex lg:justify-between">
                 <Link
-                    className="block text-center my-5 text-slate-500 uppercase text-sm hover:text-blue-600"
+                    className="block text-center my-5 text-slate-500 uppercase text-sm hover:text-indigo-600"
                     to="registrar"
                 >¿No Tienes una Cuenta? Registrate como Paciente </Link>
 
                 <Link
-                    className="block text-center my-5 text-slate-500 uppercase text-sm  hover:text-blue-600"
+                    className="block text-center my-5 text-slate-500 uppercase text-sm  hover:text-indigo-600"
                     to="olvide-password"
                 >Olvide Mi Password</Link>
             </nav>
