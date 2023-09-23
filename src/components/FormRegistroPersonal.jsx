@@ -36,7 +36,8 @@ const FormRegistroPersonal = () => {
                 return;
             }
             let tipoUsuario = "Personal";
-            await registrarPersonal({email, password, nombre, apellidoM, apellidoP, telefono, sexo, tipoUsuario});
+            let cell = parseInt(telefono);
+            await registrarPersonal({email, password, nombre, apellidoP, apellidoM, telefono: cell, sexo, tipoUsuario});
         } catch (error) {
             console.log("🚀 ~ file: FormRegistroPersonal.jsx:27 ~ handleSubmit ~ error", error)
         }

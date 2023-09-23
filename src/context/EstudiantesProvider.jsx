@@ -66,7 +66,9 @@ const EstudiantesProvider = ({children}) =>{
                 }
             }
             const {data} = await clienteAxios.post("/estudiantes", estudiante, config);
+            console.log("🚀 ~ file: EstudiantesProvider.jsx:69 ~ registrarEstudiante ~ data:", data)
             setEstudiantes([...estudiantes, data]);
+            console.log("🚀 ~ file: EstudiantesProvider.jsx:71 ~ registrarEstudiante ~ estudiantes:", estudiantes)
             window.scroll({
                 top: 0,
                 left: 0,
@@ -104,3 +106,5 @@ export {
 }
 
 export default EstudiantesContext
+
+

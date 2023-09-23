@@ -41,7 +41,8 @@ const FormRegistrarEstudiante = () => {
                 return;
             }
             let tipoUsuario = "Estudiante";
-            await registrarEstudiante({numeroControl, email, password, nombre, apellidoM, apellidoP, telefono, sexo, turno, tipoUsuario ,carrera});
+            let cell = parseInt(telefono);
+            await registrarEstudiante({numeroControl, email, password, nombre, apellidoP, apellidoM, telefono: cell, sexo, turno, tipoUsuario ,carrera});
         } catch (error) {
             console.log("🚀 ~ file: FormRegistrarEstudiante.jsx:34 ~ handleSubmit ~ error", error)
         }
