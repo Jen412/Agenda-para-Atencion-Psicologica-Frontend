@@ -22,6 +22,7 @@ const CarrerasProvider = ({children}) =>{
                 }
                 const {data} = await clienteAxios("/carreras", config);
                 setCarreras(data);
+                console.log("🚀 ~ file: CarrerasProvider.jsx:28 ~ obtenerCarreras ~ data:", data)
             } catch (error) {
                 console.log("🚀 ~ file: CarrerasProvider.jsx:27 ~ obtenerCarreras ~ error", error)
             }

@@ -74,6 +74,7 @@ const AuthProvider = ({children}) => {
             try {
                 const {data} = await clienteAxios.get("usuarios/1", config);
                 setUsuarioM(data);
+                console.log("🚀 ~ file: AuthProvider.jsx:77 ~ obenterUsuarioM ~ data:", data)
                 const response = await clienteAxios.get(`usuarios/${data.idUsuario}/horario`, config);
                 setHorarioUsuarioM(response.data);
             } catch (error) {
@@ -97,6 +98,7 @@ const AuthProvider = ({children}) => {
             }
             try {
                 const {data} = await clienteAxios.get("usuarios/2", config);
+                console.log("🚀 ~ file: AuthProvider.jsx:101 ~ obenterUsuarioV ~ data:", data)
                 // const {data} = await clienteAxios.post("usuarios/turno", {turno: "Vespertino"}, config);
                 setUsuarioV(data);
                 const response = await clienteAxios.get(`usuarios/${data.idUsuario}/horario`, config);
