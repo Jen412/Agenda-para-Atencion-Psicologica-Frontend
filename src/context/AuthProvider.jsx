@@ -72,7 +72,7 @@ const AuthProvider = ({children}) => {
                 }
             }
             try {
-                const {data} = await clienteAxios.post("usuarios/turno", {turno: "Matutino"}, config);
+                const {data} = await clienteAxios.get("usuarios/1", config);
                 setUsuarioM(data);
                 const response = await clienteAxios.get(`usuarios/${data.idUsuario}/horario`, config);
                 setHorarioUsuarioM(response.data);
@@ -96,7 +96,8 @@ const AuthProvider = ({children}) => {
                 }
             }
             try {
-                const {data} = await clienteAxios.post("usuarios/turno", {turno: "Vespertino"}, config);
+                const {data} = await clienteAxios.get("usuarios/2", config);
+                // const {data} = await clienteAxios.post("usuarios/turno", {turno: "Vespertino"}, config);
                 setUsuarioV(data);
                 const response = await clienteAxios.get(`usuarios/${data.idUsuario}/horario`, config);
                 setHorarioUsuarioV(response.data);
